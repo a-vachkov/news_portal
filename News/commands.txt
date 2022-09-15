@@ -137,6 +137,9 @@ for _ in range(10):
 
 
 
-update_ratings()
+u1 = Author.objects.get(pk=1)
+u1.update_rating()
+u2 = Author.objects.get(pk=2)
+u2.update_rating()
 print_best_rating_author()
 print_best_rating_article()
