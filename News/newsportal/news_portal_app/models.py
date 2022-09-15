@@ -7,19 +7,15 @@ class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     rating = models.SmallIntegerField(default=0)
 
-    def update_ratings(self):
-        u1 = Author.
-        sum_rating = u1.post_set.aggregate(post_rating=Sum('rating'))
-        result_sum_rating = 0
-        try:
-            result_sum_rating += sum_rating.get('post_rating')
-        except TypeError:
-            result_sum_rating = 0
-        sum_comment_rating = u1.user.comment_set.aggregate(comment_rating=Sum('rating'))
-        result_sum_comment_rating = 0
-        result_sum_comment_rating += sum_comment_rating.get('comment_rating')
-        self.user_rate = result_sum_rating * 3 + result_sum_comment_rating
+        def update_ratings(self):
+        posts_rating = self.post_set.aggregate(result=Sum('rating')).get('result')
+        comments_rating = self.user.comment_set.aggregate(result=Sum('rating')).get('result')
+        print(f"===== {self.user}: обновляем рейтинг автора =====")
+        print(f"Рейтинг постов = {posts_rating}")
+        print(f"Рейтинг комментов = {comments_rating}")
+        self.rating = 3 * posts_rating + comments_rating
         self.save()
+        print(f"Рейтинг = 3 * {posts_rating} + {comments_rating} = {self.rating}")
 
 
 class Category(models.Model):
