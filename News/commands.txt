@@ -119,7 +119,7 @@ def print_best_rating_author():
 def print_best_rating_article():
     post = Post.objects.order_by('-rating').first()
     print("\n=== Статья с самым высоким рейтингом ===")
-    print(f"Дата добавления: {post.date_time}\n"
+    print(f"Дата добавления: {post.time}\n"
           f"Автор: {post.author.user.username}\n"
           f"Рейтинг: {post.rating}\n"
           f"Заголовок: {post.title}\n"
